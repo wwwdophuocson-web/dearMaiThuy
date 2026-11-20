@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chúc Mừng Ngày Nhà Giáo Việt Nam 20/11</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root{
+    --pink:  #ff8fb1;
+    --pink2: #ff6f9c;
+    --purple:#a98bff;
+    --ink:   #4a3227;
+    --card:  #ffffff;
+  }
+
+  html, body { height: 100%; }
+
+  body{
+    font-family: 'Quicksand', 'Segoe UI', Tahoma, sans-serif;
+    color: var(--ink);
+    background: linear-gradient(135deg, #ffe9f1 0%, #e8f1ff 45%, #f3e8ff 100%);
+    background-attachment: fixed;
+    overflow: hidden;
+  }
+
+  /* ------------------ SCREENS ------------------ */
+  .screen{
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 28px 18px;
+    overflow-y: auto;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(.96) translateY(12px);
+    transition: opacity .55s ease, transform .55s cubic-bezier(.34,1.4,.5,1), visibility .55s;
+  }
+  .screen.active{
+    opacity: 1;
+    visibility: visible;
+    transform: scale(1) translateY(0);
+  }
+
+  /* ------------------ CARD ------------------ */
+  .card{
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 540px;
+    margin: auto;
+    background: var(--card);
+    border-radius: 30px;
+    padding: 42px 34px 38px;
+    text-align: center;
+    box-shadow:
+      0 24px 60px -18px rgba(160,110,150,.35),
+      0 6px 18px -8px rgba(160,110,150,.25);
+    border: 2px solid rgba(255,255,255,.9);
+  }
+
+  .emoji-row{
+    font-size: 34px;
+    letter-spacing: 6px;
+    margin-bottom: 12px;
+    animation: pop 3s ease-in-out infinite;
+  }
+  @keyframes pop{
+    0%,100%{ transform: translateY(0) scale(1); }
+    50%    { transform: translateY(-6px) scale(1.04); }
+  }
+
+  h1{
+    font-family: 'Dancing Script', 'Quicksand', cursive;
+    font-size: clamp(28px, 6vw, 40px);
+    line-height: 1.25;
+    background: linear-gradient(120deg, var(--pink2), var(--purple));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 10px;
+  }
+
+  .sub{
+    font-size: 15px;
+    color: #8b7b86;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+
+  /* ========== Ô CHỌN THẦY / CÔ ========== */
+  .field-label{
+    display: block;
+    text-align: left;
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #8b7b86;
+    letter-spacing: .3px;
+    margin-bottom: 9px;
+    padding-left: 6px;
+  }
+
+  .role-group{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .role-group input[type="radio"]{
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+  }
+
+  .role-option{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 15px 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #b7a2ae;
+    background: #fff8fb;
+    border: 2px solid #ffe0ec;
+    border-radius: 18px;
+    cursor: pointer;
+    user-select: none;
+    transition: all .22s ease;
+  }
+  .role-option .ico{
+    font-size: 20px;
+    line-height: 1;
+    transition: transform .22s ease;
+  }
+
+  .role-option:hover{
+    border-color: #ffc2dd;
+    color: #ff8fb1;
+  }
+
+  .role-group input[type="radio"]:checked + .role-option{
+    color: #fff;
+    border-color: transparent;
+    background: linear-gradient(120deg, var(--pink2), var(--purple));
+    box-shadow: 0 12px 22px -10px rgba(255,111,156,.9);
+    transform: translateY(-2px);
+  }
+  .role-group input[type="radio"]:checked + .role-option .ico{
+    transform: scale(1.18);
+  }
+
+  .role-group input[type="radio"]:focus-visible + .role-option{
+    box-shadow: 0 0 0 4px rgba(169,139,255,.35);
+  }
+
+  /* ------------------ FORM ------------------ */
+  input[type="text"]{
+    width: 100%;
+    padding: 16px 20px;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--ink);
+    text-align: center;
+    border: 2px solid #ffe0ec;
+    border-radius: 18px;
+    background: #fff8fb;
+    outline: none;
+    transition: .25s;
+  }
+  input[type="text"]::placeholder{ color: #d3bcc8; font-weight: 500; }
+  input[type="text"]:focus{
+    border-color: var(--pink);
+    background: #fff;
+    box-shadow: 0 0 0 5px rgba(255,143,177,.16);
+  }
+
+  /* trạng thái lỗi */
+  input[type="text"].input-error{
+    border-color: #ff5c8a;
+    background: #fff0f4;
+    box-shadow: 0 0 0 5px rgba(255,92,138,.18);
+    animation: shake .45s ease;
+  }
+  @keyframes shake{
+    0%,100%{ transform: translateX(0); }
+    20%    { transform: translateX(-8px); }
+    40%    { transform: translateX(8px); }
+    60%    { transform: translateX(-5px); }
+    80%    { transform: translateX(5px); }
+  }
+
+  button{
+    margin-top: 18px;
+    width: 100%;
+    padding: 16px 20px;
+    font-family: inherit;
+    font-size: 17px;
+    font-weight: 700;
+    color: #fff;
+    border: none;
+    border-radius: 18px;
+    cursor: pointer;
+    background: linear-gradient(120deg, var(--pink2), var(--purple));
+    box-shadow: 0 12px 24px -10px rgba(255,111,156,.9);
+    transition: transform .18s ease, box-shadow .18s ease, filter .18s;
+  }
+  button:hover{ transform: translateY(-3px); filter: brightness(1.05); box-shadow: 0 18px 30px -12px rgba(255,111,156,.95); }
+  button:active{ transform: translateY(0) scale(.98); }
+
+  /* ============================================
+     MODAL CẢNH BÁO "VUI LÒNG NHẬP TÊN"
+     ============================================ */
+  .modal-overlay{
+    position: fixed;
+    inset: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22px;
+    background: rgba(74, 50, 39, .35);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .32s ease, visibility .32s;
+  }
+  .modal-overlay.show{
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .modal-box{
+    position: relative;
+    width: 100%;
+    max-width: 340px;
+    background: #fff;
+    border-radius: 26px;
+    padding: 34px 26px 26px;
+    text-align: center;
+    box-shadow: 0 30px 60px -20px rgba(120, 70, 100, .55);
+    border: 2px solid #ffe4ef;
+    transform: scale(.85) translateY(18px);
+    transition: transform .38s cubic-bezier(.34,1.56,.64,1);
+  }
+  .modal-overlay.show .modal-box{
+    transform: scale(1) translateY(0);
+  }
+
+  .modal-icon{
+    width: 68px;
+    height: 68px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ffe4ef, #f0e6ff);
+    box-shadow: 0 8px 18px -8px rgba(255,111,156,.6);
+    animation: bounceIcon 1.4s ease-in-out infinite;
+  }
+  @keyframes bounceIcon{
+    0%,100%{ transform: translateY(0) rotate(-3deg); }
+    50%    { transform: translateY(-6px) rotate(3deg); }
+  }
+
+  .modal-title{
+    font-family: 'Dancing Script', cursive;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--pink2);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+
+  .modal-text{
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: #8b7b86;
+    font-weight: 500;
+    margin-bottom: 22px;
+  }
+
+  .modal-btn{
+    width: 100%;
+    margin-top: 0;
+    padding: 14px 20px;
+    font-size: 16px;
+    border-radius: 16px;
+  }
+
+  /* ------------------ LOADING ------------------ */
+  .load-wrap{
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+  }
+
+  .load-scene{
+    position: relative;
+    width: min(320px, 80vw);
+    height: 260px;
+    margin: 0 auto 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ---- BƯỚM CHÍNH ---- */
+  .butterfly-main{
+    position: relative;
+    width: 130px;
+    height: 130px;
+    animation: floatY 3.2s ease-in-out infinite;
+    filter: drop-shadow(0 12px 16px rgba(190,140,170,.25));
+  }
+  @keyframes floatY{
+    0%,100%{ transform: translateY(-14px); }
+    50%    { transform: translateY(14px); }
+  }
+
+  .wing-l{
+    transform-box: fill-box;
+    transform-origin: 100% 50%;
+    animation: flap .34s ease-in-out infinite;
+  }
+  .wing-r{
+    transform-box: fill-box;
+    transform-origin: 0% 50%;
+    animation: flap .34s ease-in-out infinite;
+  }
+  @keyframes flap{
+    0%,100%{ transform: scaleX(1); }
+    50%    { transform: scaleX(.28); }
+  }
+
+  /* ---- BƯỚM PHỤ BAY VÒNG ---- */
+  .butterfly-orbit{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0; left: 0;
+    pointer-events: none;
+  }
+  .bfly-mini{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 34px;
+    height: 34px;
+    margin: -17px 0 0 -17px;
+    animation: orbit 9s linear infinite;
+    filter: drop-shadow(0 6px 10px rgba(190,140,170,.22));
+  }
+  .bfly-mini.b2{ animation-duration: 12s; animation-delay: -4s; }
+  .bfly-mini.b3{ animation-duration: 15s; animation-delay: -8s; }
+
+  @keyframes orbit{
+    from { transform: rotate(0deg) translateX(115px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(115px) rotate(-360deg); }
+  }
+
+  /* ---- LẤP LÁNH ---- */
+  .spark{
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff 0%, #ffc2dd 60%, transparent 70%);
+    animation: twinkle 2.4s ease-in-out infinite;
+    pointer-events: none;
+  }
+  @keyframes twinkle{
+    0%,100%{ transform: scale(.3); opacity: .15; }
+    50%    { transform: scale(1);  opacity: 1;   }
+  }
+
+  /* ---- THANH TIẾN TRÌNH ---- */
+  .bar-track{
+    width: 100%;
+    height: 14px;
+    margin-top: 10px;
+    background: #ffe4ef;
+    border-radius: 999px;
+    overflow: hidden;
+    box-shadow: inset 0 2px 6px rgba(190,140,170,.25);
+  }
+  .bar-fill{
+    height: 100%;
+    width: 0%;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #ffb3cd, var(--pink2), var(--purple));
+    background-size: 200% 100%;
+    animation: shimmer 1.6s linear infinite;
+    transition: width .12s linear;
+  }
+  @keyframes shimmer{
+    0%  { background-position: 0% 50%; }
+    100%{ background-position: 200% 50%; }
+  }
+
+  .load-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 14px;
+    padding: 0 4px;
+  }
+  .tip{
+    font-size: 14px;
+    font-weight: 600;
+    color: #9b8892;
+    text-align: left;
+  }
+  .pct{
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--pink2);
+    min-width: 52px;
+    text-align: right;
+  }
+
+  /* ------------------ MAIN SCREEN ------------------ */
+  .ribbon{
+    display: inline-block;
+    font-family: 'Dancing Script', cursive;
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    padding: 6px 26px;
+    border-radius: 999px;
+    background: linear-gradient(120deg, var(--pink2), var(--purple));
+    box-shadow: 0 10px 22px -10px rgba(255,111,156,.95);
+    margin-bottom: 20px;
+  }
+
+  .to{
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--pink2);
+    margin: 14px 0 18px;
+  }
+  .to span{
+    font-family: 'Dancing Script', cursive;
+    font-size: 26px;
+    padding: 0 4px;
+  }
+
+  .msg{
+    font-size: 15.5px;
+    line-height: 1.85;
+    color: #6f6169;
+    text-align: justify;
+    text-align-last: center;
+    background: #fff7fb;
+    border-radius: 20px;
+    padding: 20px 22px;
+    border: 1.5px dashed #ffd4e4;
+  }
+  .msg strong{ color: var(--pink2); }
+
+  .sign{
+    margin-top: 18px;
+    font-family: 'Dancing Script', cursive;
+    font-size: 22px;
+    color: var(--purple);
+  }
+
+  /* ============ VIDEO SECTION ============ */
+  .video-section{
+    margin-top: 26px;
+    padding-top: 22px;
+    border-top: 2px dashed #ffd4e4;
+  }
+
+  .video-section-title{
+    font-family: 'Dancing Script', cursive;
+    font-size: 24px;
+    color: var(--pink2);
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .video-grid{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  .video-card{
+    background: #fff7fb;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1.5px solid #ffd4e4;
+    box-shadow: 0 6px 16px -8px rgba(160,110,150,.3);
+    transition: transform .25s ease, box-shadow .25s ease;
+    animation: videoIn .6s cubic-bezier(.34,1.4,.5,1) both;
+  }
+  .video-card:nth-child(1){ animation-delay: .15s; }
+  .video-card:nth-child(2){ animation-delay: .3s; }
+
+  @keyframes videoIn{
+    from { opacity: 0; transform: translateY(16px) scale(.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .video-card:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 14px 26px -10px rgba(160,110,150,.45);
+  }
+
+  .video-card video{
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #2a1a2e;
+    object-fit: cover;
+    outline: none;
+  }
+
+  .video-caption{
+    font-size: 13px;
+    font-weight: 600;
+    color: #8b7b86;
+    padding: 10px 12px;
+    text-align: center;
+    line-height: 1.45;
+  }
+  .video-caption .emo{
+    margin-right: 4px;
+  }
+
+  /* ---- FLOATING HEARTS ---- */
+  #hearts{
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .heart{
+    position: absolute;
+    bottom: -60px;
+    opacity: 0;
+    animation-name: floatUp;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    will-change: transform, opacity;
+  }
+  @keyframes floatUp{
+    0%   { transform: translateY(0) rotate(0deg);   opacity: 0; }
+    12%  { opacity: .95; }
+    85%  { opacity: .7; }
+    100% { transform: translateY(-112vh) rotate(380deg); opacity: 0; }
+  }
+
+  @media (max-width: 560px){
+    .video-grid{ grid-template-columns: 1fr; }
+    .video-section-title{ font-size: 21px; }
+  }
+
+  @media (max-width: 420px){
+    .card{ padding: 32px 22px 30px; border-radius: 24px; }
+    .msg{ font-size: 14.5px; padding: 16px; }
+    .tip{ font-size: 12.5px; }
+    .load-scene{ height: 220px; }
+    .butterfly-main{ width: 105px; height: 105px; }
+    .role-option{ font-size: 15px; padding: 13px 6px; }
+    .modal-title{ font-size: 23px; }
+    @keyframes orbit{
+      from { transform: rotate(0deg) translateX(88px) rotate(0deg); }
+      to   { transform: rotate(360deg) translateX(88px) rotate(-360deg); }
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ MÀN 1: NHẬP TÊN ============ -->
+<div class="screen active" id="screen-name">
+  <div class="card">
+    <div class="emoji-row">🌸🦋💐</div>
+    <h1>Ngày Nhà Giáo Việt Nam 20/11</h1>
+    <p class="sub">Chọn danh xưng và nhập tên để nhận món quà nhỏ nhé!</p>
+
+    <!-- Chọn Thầy / Cô -->
+    <span class="field-label">Bạn muốn gửi tới:</span>
+    <div class="role-group">
+      <input type="radio" name="role" id="roleThay" value="Thầy">
+      <label class="role-option" for="roleThay">
+        <span class="ico">👨‍🏫</span> Thầy
+      </label>
+
+      <input type="radio" name="role" id="roleCo" value="Cô" checked>
+      <label class="role-option" for="roleCo">
+        <span class="ico">👩‍🏫</span> Cô
+      </label>
+    </div>
+
+    <!-- Nhập tên -->
+    <span class="field-label">Tên của người nhận:</span>
+    <input id="nameInput" type="text" maxlength="30" autocomplete="off"
+           placeholder="Ví dụ: Nguyễn Văn An...">
+    <button id="startBtn">Bắt đầu 🎁</button>
+  </div>
+</div>
+
+<!-- ============ MÀN 2: LOADING ============ -->
+<div class="screen" id="screen-loading">
+  <div class="load-wrap">
+
+    <div class="load-scene" id="loadScene">
+      <!-- BƯỚM TO Ở GIỮA -->
+      <svg class="butterfly-main" viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg"
+           aria-label="Bướm xinh đang vỗ cánh">
+        <defs>
+          <radialGradient id="wingGradL" cx="70%" cy="40%" r="70%">
+            <stop offset="0%"  stop-color="#ffd0e4"/>
+            <stop offset="55%" stop-color="#ff9ec7"/>
+            <stop offset="100%" stop-color="#c98bff"/>
+          </radialGradient>
+          <radialGradient id="wingGradR" cx="30%" cy="40%" r="70%">
+            <stop offset="0%"  stop-color="#ffd0e4"/>
+            <stop offset="55%" stop-color="#ff9ec7"/>
+            <stop offset="100%" stop-color="#c98bff"/>
+          </radialGradient>
+        </defs>
+
+        <g class="wing-l">
+          <ellipse cx="42" cy="44" rx="34" ry="26" fill="url(#wingGradL)"
+                   transform="rotate(-18 42 44)"/>
+          <ellipse cx="46" cy="82" rx="24" ry="20" fill="url(#wingGradL)"
+                   transform="rotate(14 46 82)" opacity=".92"/>
+          <circle cx="38" cy="40" r="5" fill="#fff" opacity=".7"/>
+          <circle cx="52" cy="84" r="3.4" fill="#fff" opacity=".6"/>
+        </g>
+        <g class="wing-r">
+          <ellipse cx="88" cy="44" rx="34" ry="26" fill="url(#wingGradR)"
+                   transform="rotate(18 88 44)"/>
+          <ellipse cx="84" cy="82" rx="24" ry="20" fill="url(#wingGradR)"
+                   transform="rotate(-14 84 82)" opacity=".92"/>
+          <circle cx="92" cy="40" r="5" fill="#fff" opacity=".7"/>
+          <circle cx="78" cy="84" r="3.4" fill="#fff" opacity=".6"/>
+        </g>
+
+        <ellipse cx="65" cy="66" rx="5.5" ry="26" fill="#5b3a7e"/>
+        <circle cx="65" cy="40" r="7" fill="#5b3a7e"/>
+        <circle cx="62" cy="38" r="1.7" fill="#fff"/>
+        <circle cx="68" cy="38" r="1.7" fill="#fff"/>
+
+        <path d="M62 36 Q52 22 44 18" fill="none" stroke="#5b3a7e"
+              stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M68 36 Q78 22 86 18" fill="none" stroke="#5b3a7e"
+              stroke-width="2.2" stroke-linecap="round"/>
+        <circle cx="44" cy="18" r="2.6" fill="#ff8fb1"/>
+        <circle cx="86" cy="18" r="2.6" fill="#ff8fb1"/>
+      </svg>
+
+      <!-- BƯỚM NHỎ BAY VÒNG -->
+      <div class="butterfly-orbit">
+        <svg class="bfly-mini" viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="11" cy="13" rx="9" ry="7" fill="#ffb3d1" transform="rotate(-15 11 13)"/>
+          <ellipse cx="23" cy="13" rx="9" ry="7" fill="#ffb3d1" transform="rotate(15 23 13)"/>
+          <ellipse cx="11" cy="22" rx="6" ry="5" fill="#d8b4ff"/>
+          <ellipse cx="23" cy="22" rx="6" ry="5" fill="#d8b4ff"/>
+          <ellipse cx="17" cy="17" rx="2" ry="7" fill="#6b4a8a"/>
+        </svg>
+        <svg class="bfly-mini b2" viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="11" cy="13" rx="9" ry="7" fill="#c9b8ff" transform="rotate(-15 11 13)"/>
+          <ellipse cx="23" cy="13" rx="9" ry="7" fill="#c9b8ff" transform="rotate(15 23 13)"/>
+          <ellipse cx="11" cy="22" rx="6" ry="5" fill="#ffc2dd"/>
+          <ellipse cx="23" cy="22" rx="6" ry="5" fill="#ffc2dd"/>
+          <ellipse cx="17" cy="17" rx="2" ry="7" fill="#6b4a8a"/>
+        </svg>
+        <svg class="bfly-mini b3" viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg">
+          <ellipse cx="11" cy="13" rx="9" ry="7" fill="#ffd6a5" transform="rotate(-15 11 13)"/>
+          <ellipse cx="23" cy="13" rx="9" ry="7" fill="#ffd6a5" transform="rotate(15 23 13)"/>
+          <ellipse cx="11" cy="22" rx="6" ry="5" fill="#ffb3d1"/>
+          <ellipse cx="23" cy="22" rx="6" ry="5" fill="#ffb3d1"/>
+          <ellipse cx="17" cy="17" rx="2" ry="7" fill="#6b4a8a"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="bar-track"><div class="bar-fill" id="bar"></div></div>
+    <div class="load-row">
+      <span class="tip" id="tip">Bướm nhỏ đang chuẩn bị món quà...</span>
+      <span class="pct" id="pct">0%</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ MÀN 3: LỜI CHÚC + VIDEO ============ -->
+<div class="screen" id="screen-main">
+  <div id="hearts"></div>
+  <div class="card">
+    <div class="ribbon">20 · 11</div>
+    <h1>Chúc Mừng Ngày Nhà Giáo Việt Nam</h1>
+    <p class="to">Gửi đến <span id="greetName">Cô</span> 💐</p>
+
+    <p class="msg">
+      Nhân ngày Nhà giáo Việt Nam 20/11, em xin gửi đến <strong id="greetName2">Cô</strong>
+      những lời chúc tốt đẹp và chân thành nhất! 💐, Em chúc <span id="greetPronoun1">Cô</span> luôn vui vẻ, hạnh phúc và tràn đầy nhiệt huyết với nghề giáo. Chúc cô luôn giữ mãi nụ cười rạng rỡ, sự tận tâm và tình yêu thương dành cho các thế hệ học trò. Cảm ơn cô vì những bài học bổ ích, những lời dạy bảo và sự quan tâm mà cô đã dành cho chúng em. Cảm ơn <span id="greetPronoun2">Cô</span>
+      đã luôn kiên nhẫn, tận tâm và gieo những hạt giống tri thức cho bao thế hệ học trò.
+      Mong rằng mọi nỗ lực của <span id="greetPronoun3">Cô</span> Mong rằng mỗi ngày đến trường của cô đều là một ngày vui, luôn nhận được thật nhiều yêu thương và sự kính trọng từ học trò. Chúc cô có một ngày 20/11 thật ý nghĩa và ngập tràn hạnh phúc. ❤️
+
+
+    </p>
+
+    <p class="sign">— Chúc mừng 20/11! 🦋💐</p>
+
+    <!-- ============ 2 VIDEO ============ -->
+    <div class="video-section">
+      <h2 class="video-section-title">🎬 Khoảnh khắc tri ân</h2>
+
+      <div class="video-grid">
+        <!-- VIDEO 1 -->
+        <div class="video-card">
+          <video controls playsinline preload="metadata"
+            <source src="12A5_2011_3.mp4" type="video/mp4">
+            Trình duyệt của bạn không hỗ trợ video.
+          </video>
+          <p class="video-caption"><span class="emo"></span>Lời tri ân gửi đến cô</p>
+        </div>
+
+        <!-- VIDEO 2 -->
+        <div class="video-card">
+          <video controls playsinline preload="metadata"
+            <source src="12A5_2011_2.mp4" type="video/mp4">
+            Trình duyệt của bạn không hỗ trợ video.
+          </video>
+          <p class="video-caption"><span class="emo"></span>Kỷ niệm ngày 20/11 của lớp 12A5</p>
+        </div>
+      </div>
+    </div>
+
+    <button id="restart">Viết lời chúc khác ↺</button>
+  </div>
+</div>
+
+<!-- ============ MODAL: VUI LÒNG NHẬP TÊN ============ -->
+<div class="modal-overlay" id="nameModal" aria-hidden="true">
+  <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-icon">🐱</div>
+    <h3 class="modal-title" id="modalTitle">Vui lòng nhập tên!</h3>
+    <p class="modal-text">Bạn chưa nhập tên người nhận.<br>Hãy điền tên để món quà thêm ý nghĩa nhé 💝</p>
+    <button class="modal-btn" id="modalClose">Đã hiểu, để tôi nhập lại ✍️</button>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---------- Tham chiếu DOM ---------- */
+  const screenName    = document.getElementById('screen-name');
+  const screenLoading = document.getElementById('screen-loading');
+  const screenMain    = document.getElementById('screen-main');
+
+  const nameInput  = document.getElementById('nameInput');
+  const startBtn   = document.getElementById('startBtn');
+  const restartBtn = document.getElementById('restart');
+
+  const greetName    = document.getElementById('greetName');
+  const greetName2   = document.getElementById('greetName2');
+  const greetPro1    = document.getElementById('greetPronoun1');
+  const greetPro2    = document.getElementById('greetPronoun2');
+  const greetPro3    = document.getElementById('greetPronoun3');
+
+  const bar = document.getElementById('bar');
+  const pct = document.getElementById('pct');
+  const tip = document.getElementById('tip');
+  const heartsBox = document.getElementById('hearts');
+  const loadScene = document.getElementById('loadScene');
+
+  const nameModal  = document.getElementById('nameModal');
+  const modalClose = document.getElementById('modalClose');
+
+  const ALL_SCREENS = [screenName, screenLoading, screenMain];
+  let visitor = 'bạn';
+  let role    = 'Cô';
+  let running = false;
+  let modalTimer = null;
+
+  /* ---------- Chuyển màn hình ---------- */
+  function show(target) {
+    ALL_SCREENS.forEach(s => s.classList.toggle('active', s === target));
+  }
+
+  /* ---------- Lấy danh xưng đang chọn ---------- */
+  function getRole() {
+    const checked = document.querySelector('input[name="role"]:checked');
+    return checked ? checked.value : 'Cô';
+  }
+
+  /* ---------- Hiện / ẩn modal ---------- */
+  function openModal() {
+    clearTimeout(modalTimer);
+    nameModal.classList.add('show');
+    nameModal.setAttribute('aria-hidden', 'false');
+    // rung ô input cho dễ thấy
+    nameInput.classList.add('input-error');
+    setTimeout(() => nameInput.focus(), 350);
+  }
+
+  function closeModal() {
+    nameModal.classList.remove('show');
+    nameModal.setAttribute('aria-hidden', 'true');
+    setTimeout(() => {
+      nameInput.focus();
+      nameInput.select();
+    }, 120);
+  }
+
+  modalClose.addEventListener('click', closeModal);
+
+  // bấm ra ngoài hộp thoại để đóng
+  nameModal.addEventListener('click', e => {
+    if (e.target === nameModal) closeModal();
+  });
+
+  // phím Esc để đóng
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && nameModal.classList.contains('show')) closeModal();
+  });
+
+  // gõ vào ô tên thì gỡ trạng thái lỗi
+  nameInput.addEventListener('input', () => {
+    if (nameInput.value.trim() !== '') {
+      nameInput.classList.remove('input-error');
+    }
+  });
+
+  /* ---------- Bắt đầu ---------- */
+  function start() {
+    if (running) return;
+
+    const raw = (nameInput.value || '').trim();
+
+    // ==== KIỂM TRA Ô TRỐNG ====
+    if (raw === '') {
+      openModal();
+      return;
+    }
+
+    // đóng modal nếu còn mở
+    nameModal.classList.remove('show');
+    nameModal.setAttribute('aria-hidden', 'true');
+    nameInput.classList.remove('input-error');
+
+    running = true;
+
+    role    = getRole();
+    visitor = raw.slice(0, 30);
+
+    const fullName = visitor ? (role + ' ' + visitor) : role;
+
+    greetName.textContent  = fullName;
+    greetName2.textContent = fullName;
+    greetPro1.textContent  = role;
+    greetPro2.textContent  = role;
+    greetPro3.textContent  = role;
+
+    show(screenLoading);
+    buildSparks();
+    runProgress();
+  }
+
+  startBtn.addEventListener('click', start);
+  nameInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') { e.preventDefault(); start(); }
+  });
+
+  /* ---------- Tạo các đốm lấp lánh ---------- */
+  function buildSparks() {
+    loadScene.querySelectorAll('.spark').forEach(el => el.remove());
+
+    const count = 14;
+    for (let i = 0; i < count; i++) {
+      const s = document.createElement('span');
+      s.className = 'spark';
+      const size = 4 + Math.random() * 7;
+      s.style.width  = size + 'px';
+      s.style.height = size + 'px';
+      s.style.left = (Math.random() * 100) + '%';
+      s.style.top  = (Math.random() * 100) + '%';
+      s.style.animationDelay    = (Math.random() * 2.4) + 's';
+      s.style.animationDuration = (1.8 + Math.random() * 1.6) + 's';
+      loadScene.appendChild(s);
+    }
+  }
+
+  /* ---------- Loading ---------- */
+  const TIPS = [
+    'Bướm nhỏ đang chuẩn bị món quà...',
+    'Đang hái một bông hoa thật xinh...',
+    'Gói ghém yêu thương vào phong bì...',
+    'Sắp xong rồi, chờ chút nhé...'
+  ];
+
+  function runProgress() {
+    const DURATION = 3400;
+    const t0 = performance.now();
+    let lastTip = -1;
+
+    bar.style.width = '0%';
+    pct.textContent = '0%';
+
+    function step(now) {
+      const t = Math.min((now - t0) / DURATION, 1);
+      const eased = 1 - Math.pow(1 - t, 2.4);
+      const p = Math.round(eased * 100);
+
+      bar.style.width = p + '%';
+      pct.textContent = p + '%';
+
+      const idx = Math.min(Math.floor(t * TIPS.length), TIPS.length - 1);
+      if (idx !== lastTip) { lastTip = idx; tip.textContent = TIPS[idx]; }
+
+      if (t < 1) {
+        requestAnimationFrame(step);
+      } else {
+        setTimeout(finish, 450);
+      }
+    }
+    requestAnimationFrame(step);
+  }
+
+  /* ---------- Hoàn tất ---------- */
+  function finish() {
+    show(screenMain);
+    spawnHearts();
+    running = false;
+  }
+
+  /* ---------- Tim / hoa bay lơ lửng ---------- */
+  const EMOJIS = ['💖', '🌸', '✨', '🌷', '💐', '🦋', '💗', '🌺'];
+
+  function spawnHearts() {
+    heartsBox.innerHTML = '';
+    const count = window.innerWidth < 500 ? 12 : 20;
+
+    for (let i = 0; i < count; i++) {
+      const h = document.createElement('span');
+      h.className = 'heart';
+      h.textContent = EMOJIS[i % EMOJIS.length];
+      h.style.left = (Math.random() * 100) + '%';
+      h.style.fontSize = (16 + Math.random() * 20) + 'px';
+      h.style.animationDuration = (7 + Math.random() * 7) + 's';
+      h.style.animationDelay = (-Math.random() * 12) + 's';
+      heartsBox.appendChild(h);
+    }
+  }
+
+  /* ---------- Làm lại ---------- */
+  restartBtn.addEventListener('click', () => {
+    nameInput.value = '';
+    nameInput.classList.remove('input-error');
+    heartsBox.innerHTML = '';
+    show(screenName);
+    setTimeout(() => nameInput.focus(), 500);
+  });
+
+  /* ---------- Tự focus ô nhập tên ---------- */
+  window.addEventListener('load', () => nameInput.focus());
+})();
+</script>
+</body>
+</html>
